@@ -1,7 +1,7 @@
 # meisai
 美国数学建模竞赛算法学习总结：
 
-1.Graphtheory and networks flow.py ：图论和网络流之类的算法
+1.Graphtheory and networks flow.py ：图论和网络流之类的算法，暂时没遇到实际问题，所以代码先没写
 
 2.SA.cpp ：c++写的一道模拟退火的简单例题
 
