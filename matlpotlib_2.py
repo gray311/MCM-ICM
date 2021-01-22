@@ -83,8 +83,6 @@ plt.colorbar(shrink=.92)
 plt.xticks(())
 plt.yticks(())
 
-
-plt.figure()
 #3d图
 
 fig = plt.figure()
@@ -104,4 +102,69 @@ ax.contourf(X, Y, Z, zdir='z', offset=-2, cmap=plt.get_cmap('rainbow'))
 
 ax.set_zlim(-2, 2)
 
+
+
+plt.figure(figsize=(6, 4))
+# plt.subplot(n_rows, n_cols, plot_num)
+plt.subplot(2, 2, 1)
+plt.plot([0, 1], [0, 1])
+
+plt.subplot(222)
+plt.plot([0, 1], [0, 2])
+
+plt.subplot(223)
+plt.plot([0, 1], [0, 3])
+
+plt.subplot(224)
+plt.plot([0, 1], [0, 4])
+
+plt.tight_layout()
+
+# example 2:
+###############################
+plt.figure(figsize=(6, 4))
+# plt.subplot(n_rows, n_cols, plot_num)
+plt.subplot(2, 1, 1)
+# figure splits into 2 rows, 1 col, plot to the 1st sub-fig
+plt.plot([0, 1], [0, 1])
+
+plt.subplot(234)
+# figure splits into 2 rows, 3 col, plot to the 4th sub-fig
+plt.plot([0, 1], [0, 2])
+
+plt.subplot(235)
+# figure splits into 2 rows, 3 col, plot to the 5th sub-fig
+plt.plot([0, 1], [0, 3])
+
+plt.subplot(236)
+# figure splits into 2 rows, 3 col, plot to the 6th sub-fig
+plt.plot([0, 1], [0, 4])
+
+
+plt.tight_layout()
+
+#动画
+
+from matplotlib import animation
+fig, ax = plt.subplots()
+
+x = np.arange(0, 2*np.pi, 0.01)
+line, = ax.plot(x, np.sin(x))
+
+
+def animate(i):
+    line.set_ydata(np.sin(x + i/10.0))  # update the data
+    return line,
+
+
+# Init only required for blitting to give a clean slate.
+def init():
+    line.set_ydata(np.sin(x))
+    return line,
+
+# call the animator.  blit=True means only re-draw the parts that have changed.
+# blit=True dose not work on Mac, set blit=False
+# interval= update frequency
+ani = animation.FuncAnimation(fig=fig, func=animate, frames=100, init_func=init,
+                              interval=20, blit=False)
 plt.show()
