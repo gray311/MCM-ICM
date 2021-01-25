@@ -1,24 +1,36 @@
 from __future__ import print_function
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier # k近邻分类法
 from sklearn.linear_model import LinearRegression # 处理线性回归的model
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import preprocessing  #标准化数据
 from sklearn.datasets.samples_generator import make_classification
-from sklearn.svm import SVC #处理分类问题的model
+from sklearn.svm import SVC  #处理分类问题的model
+from sklearn.model_selection import cross_val_score #测试数据挑选
 
 
 iris = datasets.load_iris()
 
-iris_X = iris.data
-iris_y = iris.target
+X = iris.data
+y = iris.target
 
-X_train, X_test, y_train, y_test = train_test_split(iris_X, iris_y, test_size=0.3)
+'''交叉验证 cross validation'''
+k_range = range(1, 31)
+k_scores = []
+for k in k_range:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    loss = -cross_val_score(knn, X, y, cv=10, scoring='neg_mean_squared_error') # for regression
+    ##scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy') # for classification
+    k_scores.append(loss.mean())
 
-knn = KNeighborsClassifier()
-knn.fit(X_train, y_train)
+plt.plot(k_range, k_scores)
+plt.xlabel('Value of K for KNN')
+plt.ylabel('Cross-Validated Accuracy')
+plt.show()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 ##print(knn.predict(X_test))
 ##print(y_test)
@@ -79,8 +91,11 @@ plt.scatter(X[:, 0], X[:, 1], c=y)
 plt.show() '''
 
 X = preprocessing.scale(X)  #压缩到0，1的范围
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 clf = SVC()
 clf.fit(X_train, y_train)
 print(clf.score(X_test, y_test))
+
+
+
 
