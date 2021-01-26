@@ -8,7 +8,8 @@ import numpy as np
 from sklearn import preprocessing  #标准化数据
 from sklearn.datasets.samples_generator import make_classification
 from sklearn.svm import SVC  #处理分类问题的model
-from sklearn.model_selection import cross_val_score #测试数据挑选
+from sklearn.model_selection import cross_val_score  #测试数据挑选
+from sklearn.model_selection import learning_curve
 
 
 iris = datasets.load_iris()
@@ -97,5 +98,7 @@ clf.fit(X_train, y_train)
 print(clf.score(X_test, y_test))
 
 
+
+'''over fitting'''
 
 
