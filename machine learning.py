@@ -10,6 +10,7 @@ from sklearn.datasets.samples_generator import make_classification
 from sklearn.svm import SVC  #处理分类问题的model
 from sklearn.model_selection import cross_val_score  #测试数据挑选
 from sklearn.model_selection import learning_curve
+from sklearn.datasets import load_digits
 
 
 iris = datasets.load_iris()
@@ -101,4 +102,23 @@ print(clf.score(X_test, y_test))
 
 '''over fitting'''
 
+digits = load_digits()
 
+X = digits.data
+y = digits.target
+train_sizes, train_loss, test_loss = learning_curve(SVC(gamma=0.01), X, y, cv=10,
+                            scoring='neg_mean_squared_error',
+                            train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
+
+train_loss_mean = -np.mean(train_loss, axis=1)
+test_loss_mean = -np.mean(test_loss, axis=1)
+
+
+
+plt.plot(train_sizes, train_loss_mean, 'o-', color='r', label='Training')
+plt.plot(train_sizes, test_loss_mean, 'o-', color='g', label='Crossing-validation')
+
+plt.xlabel("Training examples")
+plt.ylabel("Loss")
+plt.legend(loc='best')
+plt.show()
