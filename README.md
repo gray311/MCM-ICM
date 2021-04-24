@@ -14,3 +14,5 @@
 6.matlpotlib_2.py ：运用py进行数据可视化，主要是除折线图以外的一些图，比如柱状图、等高线、散点图、3d图和动画等等
 
 7.programming.py ：线性规划、整数规划及非线性规划
+
+8.Machine Learning.py : 一些机器学习算法的总结
